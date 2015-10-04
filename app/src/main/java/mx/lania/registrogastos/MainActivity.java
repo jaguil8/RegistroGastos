@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import mx.lania.registrogastos.controller.ContactsController;
-import mx.lania.registrogastos.controller.ContactsController;
 
 public class MainActivity extends AppCompatActivity {
 

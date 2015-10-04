@@ -14,8 +14,8 @@ import android.util.Log;
 public class DBAdapter {
 
     //---Variables de Base de Datos---
-    private static final String DATABASE_NAME = "MyDB";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Gastos";
+    private static final int DATABASE_VERSION = 2;
     final Context context;
 
     //static final String TAG = "DBAdapter";
@@ -40,7 +40,7 @@ public class DBAdapter {
         DBHelper.close();
     }
 
-    public boolean insertContact(String name, Money gasto){
+    public boolean insertContact(String name, Double gasto){
         GastosDB gastosDB = new GastosDB(db);
         long id = gastosDB.insertGasto(name, gasto);
         return id > 0;

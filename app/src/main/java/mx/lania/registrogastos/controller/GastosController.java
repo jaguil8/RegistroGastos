@@ -12,7 +12,7 @@ import mx.lania.registrogastos.database.DBAdapter;
 
 public class GastosController {
 
-    public static boolean insertGasto(Context context, String descripcion, Money gasto){
+    public static boolean insertGasto(Context context, String descripcion, Double gasto){
         DBAdapter db = new DBAdapter(context);
         db.open();
         boolean isInserted = db.insertContact(descripcion, gasto);

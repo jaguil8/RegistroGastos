@@ -6,46 +6,32 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by jaguilera on 26/09/2015.
- * Esta clase contendrá el Schema relacionado a la Tabla: Gastos
+ * Created by miguel on 04/10/2015.
  */
-
-public class GastosDB {
-
+public class UsuarioBD {
 
     /*
-    CREATE TABLE `gastos` (
-        `id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-        `descripcion`	TEXT NOT NULL,
-        `cantidad`	NUMERIC NOT NULL,
-        `idusuario`	INTEGER NOT NULL,
-        `tipo_gasto`	INTEGER NOT NULL DEFAULT 0,
-        `fecha`	TEXT NOT NULL,
-        FOREIGN KEY(`idusuario`) REFERENCES usuario
+    CREATE TABLE `usuario` (
+	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	`login`	TEXT NOT NULL UNIQUE,
+	`password`	TEXT NOT NULL
     );
      */
-    //---Nombres de la Tabla---
+
+
     public static final String TABLENAME_GASTOS = "gastos";
 
     //---Campos---
     public static final String KEY_ID = "id";
     public static final String KEY_DESC = "descripcion";
     public static final String KEY_CANTIDAD = "cantidad";
-    public static final String KEY_ID_USUARIO = "idusuario";
-    public static final String KEY_TIPO_GASTO = "tipogasto";
-    public static final String KEY_FECHA = "fecha";
 
     //---Scripting---
     static final String DATABASE_CREATE =
             "CREATE TABLE " + TABLENAME_GASTOS + " ("
                     + KEY_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
                     + KEY_DESC + " TEXT NOT NULL, "
-                    + KEY_CANTIDAD + " NUMERIC NOT NULL, "
-                    + KEY_ID_USUARIO + " INTEGER NOT NULL, "
-                    + KEY_TIPO_GASTO + " INTEGER NOT NULL DEFAULT 0, "
-                    + KEY_FECHA + " TEXT NOT NULL, "
-                    + " FOREIGN KEY(`idusuario`) REFERENCES usuario "
-                    +");";
+                    + KEY_CANTIDAD + " NUMERIC NOT NULL);";
 
     /**
      * CREATE TABLE contacts ( _id  integer primary key autoincrement, name  text not null,
@@ -53,7 +39,7 @@ public class GastosDB {
      */
     SQLiteDatabase db;
 
-    public GastosDB(SQLiteDatabase db) {
+    public UsuarioBD(SQLiteDatabase db) {
         this.db = db;
     }
 
