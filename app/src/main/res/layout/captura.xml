@@ -11,14 +11,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:digits="0123456789."/>
+        android:digits="0123456789."
+        android:id="@+id/cantidadGasto"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Descripción:"/>
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/descripcionGasto"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -26,13 +28,25 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"/>
+        android:inputType="date"
+        android:id="@+id/fechaGasto"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Tipo de Gasto:"/>
     <EditText
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/tipoGasto"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        android:id="@+id/guardar"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:id="@+id/cancelar"/>
 
 </LinearLayout>
