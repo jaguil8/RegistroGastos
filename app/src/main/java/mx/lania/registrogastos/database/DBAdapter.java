@@ -40,11 +40,23 @@ public class DBAdapter {
         DBHelper.close();
     }
 
-    public boolean insertContact(String name, Double gasto){
+    /*
+    *  SE INICIA PROCEDIMIENTOS DE DTD
+    *
+    * */
+    public boolean insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto){
         GastosDB gastosDB = new GastosDB(db);
-        long id = gastosDB.insertGasto(name, gasto);
+        long id = gastosDB.insertGasto(descripcion, gasto,fecha,idUsuario,tipoGasto);
         return id > 0;
     }
+
+    public boolean insertUsuario(String login,String password){
+        UsuarioBD usuarioDB = new UsuarioBD(db);
+        long id = usuarioDB.insertUsuario(login,password);
+        return id > 0;
+    }
+
+    /*-------------------------------*/
 
     public String getGastoByID(long id) {
         GastosDB gastosDB = new GastosDB(db);
@@ -64,7 +76,8 @@ public class DBAdapter {
         {
             //---Se llama cuando se crea por primera vez---
             try {
-                db.execSQL(GastosDB.DATABASE_CREATE);
+                db.execSQL(GastosDB.TABLE_CREATE);
+                db.execSQL(UsuarioBD.TABLE_CREATE);
             } catch (SQLException sqle) {
                 sqle.printStackTrace();
             }
@@ -78,6 +91,7 @@ public class DBAdapter {
                     "]" + " to " + "["
                     + newVersion + "], which will destroy all old data");
             db.execSQL("DROP TABLE IF EXISTS " + GastosDB.TABLENAME_GASTOS);
+            db.execSQL("DROP TABLE IF EXISTS " + UsuarioBD.TABLENAME_USUARIOS);
             /*---Aquí se pueden insertar mecanismos para recuperar datos de las tablas de la versión
             anterior.*/
             onCreate(db);

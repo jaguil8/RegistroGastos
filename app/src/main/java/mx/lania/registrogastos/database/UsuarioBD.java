@@ -19,19 +19,19 @@ public class UsuarioBD {
      */
 
 
-    public static final String TABLENAME_GASTOS = "gastos";
+    public static final String TABLENAME_USUARIOS = "gastos";
 
     //---Campos---
     public static final String KEY_ID = "id";
-    public static final String KEY_DESC = "descripcion";
-    public static final String KEY_CANTIDAD = "cantidad";
+    public static final String KEY_LOGIN = "login";
+    public static final String KEY_PASSWORD = "password";
 
     //---Scripting---
-    static final String DATABASE_CREATE =
-            "CREATE TABLE " + TABLENAME_GASTOS + " ("
+    static final String TABLE_CREATE =
+            "CREATE TABLE " + TABLENAME_USUARIOS + " ("
                     + KEY_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
-                    + KEY_DESC + " TEXT NOT NULL, "
-                    + KEY_CANTIDAD + " NUMERIC NOT NULL);";
+                    + KEY_LOGIN + " TEXT NOT NULL UNIQUE, "
+                    + KEY_PASSWORD + " TEXT NOT NULL);";
 
     /**
      * CREATE TABLE contacts ( _id  integer primary key autoincrement, name  text not null,
@@ -43,21 +43,21 @@ public class UsuarioBD {
         this.db = db;
     }
 
-    //---Inserta una constante a la base de datos---
-    public long insertGasto(String descripcion, Double gasto) {
+    //---Inserta un usuario a la base de datos---
+    public long insertUsuario(String login, String password) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_DESC, descripcion);
-        contentValues.put(KEY_CANTIDAD, gasto);
-        long rowID = db.insert(TABLENAME_GASTOS, null, contentValues);
+        contentValues.put(KEY_LOGIN, login);
+        contentValues.put(KEY_PASSWORD, password);
+        long rowID = db.insert(TABLENAME_USUARIOS, null, contentValues);
         return rowID;
     }
 
-    //---Obtiene un contacto en particular---
-    public Cursor getGastoByID(long rowId) throws SQLException {
+    //---Obtiene un usuario en particular---
+    public Cursor getUsuarioByID(long rowId) throws SQLException {
         Cursor mCursor = db.query(
                 true,
-                TABLENAME_GASTOS,
-                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD},
+                TABLENAME_USUARIOS,
+                new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
                 KEY_ID + "=" + rowId,
                 null, null, null, null, null);
 
@@ -68,22 +68,22 @@ public class UsuarioBD {
         return mCursor;
     }
 
-    //---Borra un gasto en particular---
-    public boolean deleteGasto(long rowId) {
-        return db.delete(TABLENAME_GASTOS, KEY_ID + "=" + rowId, null) > 0;
+    //---Borra un usuario en particular---
+    public boolean deleteUsuario(long rowId) {
+        return db.delete(TABLENAME_USUARIOS, KEY_ID + "=" + rowId, null) > 0;
     }
 
-    //---Regresa todos los gastos---
-    public Cursor getAllGastos() {
-        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC,
-                KEY_CANTIDAD}, null, null, null, null, null);
+    //---Regresa todos los usuarios---
+    public Cursor getAllUsuarios() {
+        return db.query(TABLENAME_USUARIOS, new String[]{KEY_ID, KEY_LOGIN,
+                KEY_PASSWORD}, null, null, null, null, null);
     }
 
-    //---Actualiza un gasto---
-    public boolean updateGasto(long rowId, String descripcion, Double gasto) {
+    //---Actualiza un usuario---
+    public boolean updateUsuario(long rowId, String login, String password) {
         ContentValues args = new ContentValues();
-        args.put(KEY_DESC, descripcion);
-        args.put(KEY_CANTIDAD, gasto);
-        return db.update(TABLENAME_GASTOS, args, KEY_ID + "=" + rowId, null) > 0;
+        args.put(KEY_LOGIN, login);
+        args.put(KEY_PASSWORD, password);
+        return db.update(TABLENAME_USUARIOS, args, KEY_ID + "=" + rowId, null) > 0;
     }
 }

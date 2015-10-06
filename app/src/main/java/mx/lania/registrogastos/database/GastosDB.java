@@ -36,7 +36,7 @@ public class GastosDB {
     public static final String KEY_FECHA = "fecha";
 
     //---Scripting---
-    static final String DATABASE_CREATE =
+    static final String TABLE_CREATE =
             "CREATE TABLE " + TABLENAME_GASTOS + " ("
                     + KEY_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
                     + KEY_DESC + " TEXT NOT NULL, "
@@ -57,11 +57,14 @@ public class GastosDB {
         this.db = db;
     }
 
-    //---Inserta una constante a la base de datos---
-    public long insertGasto(String descripcion, Double gasto) {
+    //---Inserta un gasto a la base de datos---
+    public long insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_DESC, descripcion);
         contentValues.put(KEY_CANTIDAD, gasto);
+        contentValues.put(KEY_FECHA, fecha);
+        contentValues.put(KEY_ID_USUARIO, idUsuario);
+        contentValues.put(KEY_TIPO_GASTO, tipoGasto);
         long rowID = db.insert(TABLENAME_GASTOS, null, contentValues);
         return rowID;
     }
@@ -71,7 +74,7 @@ public class GastosDB {
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_GASTOS,
-                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD},
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
                 KEY_ID + "=" + rowId,
                 null, null, null, null, null);
 
@@ -89,15 +92,18 @@ public class GastosDB {
 
     //---Regresa todos los gastos---
     public Cursor getAllGastos() {
-        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC,
-                KEY_CANTIDAD}, null, null, null, null, null);
+        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                null, null, null, null, null);
     }
 
     //---Actualiza un gasto---
-    public boolean updateGasto(long rowId, String descripcion, Double gasto) {
+    public boolean updateGasto(long rowId, String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto) {
         ContentValues args = new ContentValues();
         args.put(KEY_DESC, descripcion);
         args.put(KEY_CANTIDAD, gasto);
+        args.put(KEY_FECHA, fecha);
+        args.put(KEY_ID_USUARIO, idUsuario);
+        args.put(KEY_TIPO_GASTO, tipoGasto);
         return db.update(TABLENAME_GASTOS, args, KEY_ID + "=" + rowId, null) > 0;
     }
 }
