@@ -31,6 +31,6 @@
         <Button
             android:id="@+id/buttonSignIn"
             android:text="Ingresar"
-            android:layout_span="2"/>
+            android:layout_width="150dp"/>
     </TableRow>
 </TableLayout>
