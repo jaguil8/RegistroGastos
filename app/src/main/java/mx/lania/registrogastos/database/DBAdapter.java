@@ -52,17 +52,31 @@ public class DBAdapter {
 
     public boolean insertUsuario(String login,String password){
         UsuarioBD usuarioDB = new UsuarioBD(db);
-        long id = usuarioDB.insertUsuario(login,password);
+        long id = usuarioDB.insertUsuario(login, password);
         return id > 0;
     }
 
-    /*-------------------------------*/
+    public Cursor existeUsuario(String login){
+        UsuarioBD usuarioDB = new UsuarioBD(db);
+        Cursor id = usuarioDB.getUsuarioByLogin(login);
+        return id ;
+    }
+
+    public boolean deleteGasto(int idGasto){
+        GastosDB gastosDB = new GastosDB(db);
+        boolean isDeleted = gastosDB.deleteGasto(idGasto);
+        return isDeleted;
+    }
 
     public String getGastoByID(long id) {
         GastosDB gastosDB = new GastosDB(db);
         Cursor cursor = gastosDB.getGastoByID(id);
         return cursor.getString(1);
     }
+
+
+    /*-------------------------------*/
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper
     {

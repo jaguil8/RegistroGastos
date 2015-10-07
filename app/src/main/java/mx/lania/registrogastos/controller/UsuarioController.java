@@ -4,25 +4,22 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.Date;
-
 import mx.lania.registrogastos.database.DBAdapter;
 
 /**
- * Created by jaguilera on 26/09/2015.
+ * Created by miguel on 07/10/2015.
  */
+public class UsuarioController {
 
-public class GastosController {
-
-    public static boolean insertGasto(Context context, String descripcion, Double gasto, String fecha,int idUsuario , int tipoGasto){
+    public static boolean insertUsuario(Context context, String login,String passworrd){
         DBAdapter db = new DBAdapter(context);
         db.open();
-        boolean isInserted = db.insertGasto(descripcion, gasto,fecha,idUsuario,tipoGasto);
+        boolean isInserted = db.insertUsuario(login,passworrd);
         db.close();
         return isInserted;
     }
 
-    public static boolean deleteGasto (Context context, int idGasto)
+    public static boolean deleteUsuario (Context context, int idUsuario)
     {
         DBAdapter db = new DBAdapter(context);
         db.open();
@@ -31,12 +28,19 @@ public class GastosController {
         return isDeleted;
     }
 
-    public static void displayGasto(Context context, long id) {
+    public static void displayUsuario(Context context, long id) {
         DBAdapter db = new DBAdapter(context);
         db.open();
         String descripcion = db.getGastoByID(id);
         db.close();
         Log.d("DESCRIPCION_GASTO", descripcion);
         Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
+    }
+
+    public static int existeUsuario(Context context,String login)
+    {
+        DBAdapter db = new DBAdapter(context);
+        db.open();
+        return 0;
     }
 }

@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
        /* String nombre = "Jesus";
         String email = "jaguil@lania.mx";
 

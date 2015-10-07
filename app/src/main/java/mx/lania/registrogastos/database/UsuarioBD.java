@@ -68,6 +68,21 @@ public class UsuarioBD {
         return mCursor;
     }
 
+    public Cursor getUsuarioByLogin(String  login) throws SQLException {
+        Cursor mCursor = db.query(
+                true,
+                TABLENAME_USUARIOS,
+                new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
+                KEY_LOGIN + "=" + login,
+                null, null, null, null, null);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        return mCursor;
+    }
+
     //---Borra un usuario en particular---
     public boolean deleteUsuario(long rowId) {
         return db.delete(TABLENAME_USUARIOS, KEY_ID + "=" + rowId, null) > 0;
