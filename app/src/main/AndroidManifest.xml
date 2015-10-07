@@ -16,6 +16,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".historial"
+            android:label="@string/title_activity_historial" >
+            <intent-filter>
+                <action android:name=" mx.lania.registrogastos.historial" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegistrarGasto"
+            android:label="@string/title_activity_registrar_gasto" >
+            <action android:name=" mx.lania.registrogastos.RegistrarGasto" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </activity>
     </application>
 
 </manifest>

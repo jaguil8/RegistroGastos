@@ -4,35 +4,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-
-public class MainActivity extends AppCompatActivity {
+public class historial extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-       /* String nombre = "Jesus";
-        String email = "jaguil@lania.mx";
-
-        ContactsController.insertContact(this, nombre, email);
-        ContactsController.displayContact(this, 1);*/
-    }
-
-    public void Ingresar (View view){
-
-    }
-
-    public void Registrar (View view){
-
+        setContentView(R.layout.activity_historial);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_historial, menu);
         return true;
     }
 

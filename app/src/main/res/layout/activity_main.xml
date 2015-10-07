@@ -31,6 +31,12 @@
         <Button
             android:id="@+id/buttonIngresar"
             android:text="Ingresar"
-            android:layout_width="150dp"/>
+            android:onClick="Ingresar"
+            android:layout_width="120dp"/>
+        <Button
+            android:id="@+id/buttonRegistrar"
+            android:text="Registrar"
+            android:onClick="Registrar"
+            android:layout_width="120dp"/>
     </TableRow>
 </TableLayout>

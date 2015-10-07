@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="mx.lania.registrogastos.historial">
+
+
+    <Button
+
+        android:id="@+id/bt_agregar"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="agregar"
+        android:text="Agregar"
+        />
+
+
+    <ScrollView android:isScrollContainer="true"
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <GridView
+            android:id="@+id/gbhistorial"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+
+</LinearLayout>
