@@ -70,7 +70,7 @@ public class UsuarioBD {
     }
 
     public Cursor getUsuarioByLogin(String  login) throws SQLException {
-        String whereClause = KEY_LOGIN +" = ? ";
+        /*String whereClause = KEY_LOGIN +" = ? ";
         String[] whereArgs = new String[] {
                login
         };
@@ -80,11 +80,20 @@ public class UsuarioBD {
                 new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
                 whereClause,
                 whereArgs,
-                null,null,null,null);
+                null,null,null,null);*/
+
+        Cursor mCursor = db.query(
+                true,
+                TABLENAME_USUARIOS,
+                new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
+                KEY_LOGIN + "='" + login + "'",
+                null, null, null, null, null);
 
 
         if (mCursor != null) {
             mCursor.moveToFirst();
+        }else{
+            return null;
         }
 
         return mCursor;
