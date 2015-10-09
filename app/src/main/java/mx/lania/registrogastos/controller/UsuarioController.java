@@ -37,6 +37,14 @@ public class UsuarioController {
         Toast.makeText(context, "El nombre del usuario es: " + nombre, Toast.LENGTH_LONG).show();
     }
 
+    public static String getPassword(Context context, String login) {
+        DBAdapter db = new DBAdapter(context);
+        db.open();
+        String password = db.getPasswordByLogin(login).toString();
+        db.close();
+        return password;
+    }
+
     public static boolean existeUsuario(Context context,String login)
     {
         DBAdapter db = new DBAdapter(context);
