@@ -11,10 +11,10 @@ import mx.lania.registrogastos.database.DBAdapter;
  */
 public class UsuarioController {
 
-    public static boolean insertUsuario(Context context, String login,String passworrd){
+    public static boolean insertUsuario(Context context, String login,String password){
         DBAdapter db = new DBAdapter(context);
         db.open();
-        boolean isInserted = db.insertUsuario(login,passworrd);
+        boolean isInserted = db.insertUsuario(login, password);
         db.close();
         return isInserted;
     }
@@ -28,13 +28,13 @@ public class UsuarioController {
         return isDeleted;
     }
 
-    public static void displayUsuario(Context context, long id) {
+    public static void displayUsuario(Context context, String login) {
         DBAdapter db = new DBAdapter(context);
         db.open();
-        String descripcion = db.getGastoByID(id);
+        String nombre = db.getUsuarioByLogin(login).toString();
         db.close();
-        Log.d("DESCRIPCION_GASTO", descripcion);
-        Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
+        Log.d("NOMBRE_CONTACTO", nombre);
+        Toast.makeText(context, "El nombre del usuario es: " + nombre, Toast.LENGTH_LONG).show();
     }
 
     public static boolean existeUsuario(Context context,String login)
