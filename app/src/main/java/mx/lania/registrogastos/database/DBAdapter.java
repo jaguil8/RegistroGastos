@@ -80,6 +80,12 @@ public class DBAdapter {
         return cursor.getString(1);
     }
 
+    public String getPasswordByLogin(String nombre){
+        UsuarioBD usuarioBD = new UsuarioBD(db);
+        Cursor cursor = usuarioBD.getUsuarioByLogin(nombre);
+        return cursor.getString(2);
+    }
+
 
     /*-------------------------------*/
 
