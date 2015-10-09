@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import mx.lania.registrogastos.controller.UsuarioController;
+import mx.lania.registrogastos.database.DBAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -13,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
        /* String nombre = "Jesus";
         String email = "jaguil@lania.mx";
@@ -27,6 +31,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Registrar (View view){
+        EditText txtUsuario =  (EditText)findViewById(R.id.txtUsuario);
+        EditText txtPassword =  (EditText)findViewById(R.id.txtPassword);
+
+        if(!txtUsuario.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
+            boolean existe = UsuarioController.existeUsuario(this, txtUsuario.getText().toString());
+            if(existe)
+                Toast.makeText(this, "El nombre de usuario ya existe", Toast.LENGTH_LONG).show();
+            else {
+                UsuarioController.insertUsuario(this,txtUsuario.getText().toString(),txtPassword.getText().toString());
+            }
+        }
+        else
+        {
+            Toast.makeText(this, "Debe introducir un login y password", Toast.LENGTH_LONG).show();
+        }
 
     }
 

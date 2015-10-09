@@ -15,7 +15,7 @@ public class DBAdapter {
 
     //---Variables de Base de Datos---
     private static final String DATABASE_NAME = "Gastos";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     final Context context;
 
     //static final String TAG = "DBAdapter";
@@ -56,10 +56,10 @@ public class DBAdapter {
         return id > 0;
     }
 
-    public Cursor existeUsuario(String login){
+    public Boolean existeUsuario(String login){
         UsuarioBD usuarioDB = new UsuarioBD(db);
-        Cursor id = usuarioDB.getUsuarioByLogin(login);
-        return id ;
+        Cursor usuario = usuarioDB.getUsuarioByLogin(login);
+        return usuario.getString(1).equals("0")?true:false ;
     }
 
     public boolean deleteGasto(int idGasto){

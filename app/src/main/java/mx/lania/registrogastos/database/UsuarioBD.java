@@ -19,7 +19,7 @@ public class UsuarioBD {
      */
 
 
-    public static final String TABLENAME_USUARIOS = "gastos";
+    public static final String TABLENAME_USUARIOS = "usuario";
 
     //---Campos---
     public static final String KEY_ID = "id";
@@ -54,6 +54,7 @@ public class UsuarioBD {
 
     //---Obtiene un usuario en particular---
     public Cursor getUsuarioByID(long rowId) throws SQLException {
+
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_USUARIOS,
@@ -69,12 +70,18 @@ public class UsuarioBD {
     }
 
     public Cursor getUsuarioByLogin(String  login) throws SQLException {
+        String whereClause = KEY_LOGIN +" = ? ";
+        String[] whereArgs = new String[] {
+               login
+        };
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_USUARIOS,
                 new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
-                KEY_LOGIN + "=" + login,
-                null, null, null, null, null);
+                whereClause,
+                whereArgs,
+                null,null,null,null);
+
 
         if (mCursor != null) {
             mCursor.moveToFirst();

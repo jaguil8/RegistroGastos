@@ -37,10 +37,12 @@ public class UsuarioController {
         Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
     }
 
-    public static int existeUsuario(Context context,String login)
+    public static boolean existeUsuario(Context context,String login)
     {
         DBAdapter db = new DBAdapter(context);
         db.open();
-        return 0;
+        boolean existe = db.existeUsuario(login);
+        db.close();
+        return existe;
     }
 }
