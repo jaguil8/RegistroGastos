@@ -46,7 +46,7 @@ public class DBAdapter {
     * */
     public boolean insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto){
         GastosDB gastosDB = new GastosDB(db);
-        long id = gastosDB.insertGasto(descripcion, gasto,fecha,idUsuario,tipoGasto);
+        long id = gastosDB.insertGasto(descripcion, gasto, fecha, idUsuario, tipoGasto);
         return id > 0;
     }
 
@@ -71,6 +71,12 @@ public class DBAdapter {
     public String getGastoByID(long id) {
         GastosDB gastosDB = new GastosDB(db);
         Cursor cursor = gastosDB.getGastoByID(id);
+        return cursor.getString(1);
+    }
+
+    public String getUsuarioByLogin(String nombre){
+        UsuarioBD usuarioBD = new UsuarioBD(db);
+        Cursor cursor = usuarioBD.getUsuarioByLogin(nombre);
         return cursor.getString(1);
     }
 
