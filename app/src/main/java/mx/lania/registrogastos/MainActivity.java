@@ -1,5 +1,7 @@
 package mx.lania.registrogastos;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
         EditText txtPassword = (EditText) findViewById(R.id.txtPassword);
         String usuario = txtUsuario.getText().toString();
         String password = txtPassword.getText().toString();
+
+        String token = UsuarioController.getPassword(this, usuario);
+
+        if(password.equals(token)){
+            Toast.makeText(this, "Bienvenido", Toast.LENGTH_LONG).show();
+            startActivity(new Intent("mx.lania.registrogastos.RegistrarGasto"));
+        }else{
+            Toast.makeText(this, token + password, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error de usuario y/o contraseña", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void Registrar (View view){
