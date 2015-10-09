@@ -42,11 +42,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Guardar"
-        android:id="@+id/guardar"/>
+        android:id="@+id/guardar"
+        android:onClick="onGuardar"/>
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Cancelar"
-        android:id="@+id/cancelar"/>
+        android:id="@+id/cancelar"
+        android:onClick="onCancelar"/>
 
 </LinearLayout>
