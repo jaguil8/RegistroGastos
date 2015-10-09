@@ -27,25 +27,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Ingresar (View view){
-
+        EditText txtUsuario = (EditText) findViewById(R.id.txtUsuario);
+        EditText txtPassword = (EditText) findViewById(R.id.txtPassword);
+        String usuario = txtUsuario.getText().toString();
+        String password = txtPassword.getText().toString();
     }
 
     public void Registrar (View view){
         EditText txtUsuario =  (EditText)findViewById(R.id.txtUsuario);
         EditText txtPassword =  (EditText)findViewById(R.id.txtPassword);
+        String usuario = txtUsuario.getText().toString();
+        String password = txtPassword.getText().toString();
 
-        if(!txtUsuario.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
+        UsuarioController.displayUsuario(this, usuario);
+        UsuarioController.insertUsuario(this, usuario, password);
+
+        /*if(!txtUsuario.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
             boolean existe = UsuarioController.existeUsuario(this, txtUsuario.getText().toString());
             if(existe)
                 Toast.makeText(this, "El nombre de usuario ya existe", Toast.LENGTH_LONG).show();
             else {
                 UsuarioController.insertUsuario(this,txtUsuario.getText().toString(),txtPassword.getText().toString());
+                Toast.makeText(this, "El usuario se insertó", Toast.LENGTH_LONG).show();
             }
         }
         else
         {
             Toast.makeText(this, "Debe introducir un login y password", Toast.LENGTH_LONG).show();
-        }
+        }*/
 
     }
 
