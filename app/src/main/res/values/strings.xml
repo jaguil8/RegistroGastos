@@ -5,4 +5,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_historial">historial</string>
     <string name="title_activity_registrar_gasto">RegistrarGasto</string>
+
+    <string-array name="tipogasto">
+        <item>Primario</item>
+        <item>Secundario</item>
+
+    </string-array>
 </resources>

@@ -17,16 +17,19 @@
         />
 
 
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:id="@+id/gbhistorial"
+
+        tools:listitem="@android:layout/list_content" />
+
     <ScrollView android:isScrollContainer="true"
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="200dp">
 
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:id="@+id/gbhistorial"
-            tools:listitem="@android:layout/list_content" />
+
     </ScrollView>
 
 

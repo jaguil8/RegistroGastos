@@ -55,7 +55,7 @@ public class historial extends AppCompatActivity {
 
         gb =  (ListView)findViewById(R.id.gbhistorial);
         List<String> list = new ArrayList<String>();
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.activity_list_item,list);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
         try{
             List<String> c = GastosController.getAllGastos(this);
             Iterator<String> it = c.iterator();
