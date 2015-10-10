@@ -74,8 +74,24 @@ public class GastosDB {
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_GASTOS,
-                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD, KEY_FECHA, KEY_ID_USUARIO, KEY_TIPO_GASTO},
                 KEY_ID + "=" + rowId,
+                null, null, null, null, null);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        return mCursor;
+    }
+
+
+    public Cursor getGastoByDescripcion(String descripcion) throws SQLException {
+        Cursor mCursor = db.query(
+                true,
+                TABLENAME_GASTOS,
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                KEY_DESC + "='" + descripcion + "'",
                 null, null, null, null, null);
 
         if (mCursor != null) {

@@ -2,6 +2,7 @@ package mx.lania.registrogastos.controller;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ public class GastosController {
     {
         DBAdapter db = new DBAdapter(context);
         db.open();
-        boolean isDeleted = true;//db.(descripcion, gasto,fecha,idUsuario,tipoGasto);
+        boolean isDeleted = db.deleteGasto(idGasto);
         db.close();
         return isDeleted;
     }
@@ -41,6 +42,18 @@ public class GastosController {
         db.close();
         Log.d("DESCRIPCION_GASTO", descripcion);
         Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
+    }
+
+    public static int getGastoByDescripcion(Context context,String descripcion) throws SQLException {
+        DBAdapter db = new DBAdapter(context);
+        int id=0;
+        db.open();
+        Cursor c = db.getGastoByDescripcion(descripcion);
+        if(c.moveToFirst()){
+            id = Integer.parseInt(c.getString(0));
+        }
+        db.close();
+        return id;
     }
 
     public static List<String> getAllGastos(Context context) {

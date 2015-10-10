@@ -35,16 +35,25 @@ public class MainActivity extends AppCompatActivity {
         String usuario = txtUsuario.getText().toString();
         String password = txtPassword.getText().toString();
 
-        String token = UsuarioController.getPassword(this, usuario);
 
-        if(password.equals(token)){
-            Toast.makeText(this, "Bienvenido " +usuario, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent("mx.lania.registrogastos.historial");
-            int idUsuario = 1; //UsuarioController.obtenerUsuarioId(this,usuario);
-            intent.putExtra("ID_USUARIO", idUsuario);
-            startActivity(intent);
-        }else{
-            Toast.makeText(this, "Error de usuario y/o contraseña", Toast.LENGTH_LONG).show();
+        int idUsuario = UsuarioController.getUsuarioByLogin(this, usuario);
+        if(idUsuario !=0) {
+            String token = UsuarioController.getPassword(this, usuario);
+
+            if (password.equals(token)) {
+                Toast.makeText(this, "Bienvenido " + usuario, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("mx.lania.registrogastos.historial");
+
+                intent.putExtra("ID_USUARIO", idUsuario);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(this, "Error de usuario y/o contraseña", Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(this, "El usuario no existe favor de registrarse", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -56,9 +65,14 @@ public class MainActivity extends AppCompatActivity {
         String password = txtPassword.getText().toString();
         if (!usuario.equals("") || !password.equals("")) {
 
-            UsuarioController.insertUsuario(this, usuario, password);
-            //UsuarioController.displayUsuario(this, usuario);
-            Toast.makeText(this, "El usuario: " + usuario +" se insertó se registro con exito", Toast.LENGTH_LONG).show();
+            boolean existe = UsuarioController.existeUsuario(this, txtUsuario.getText().toString());
+            if (existe)
+                Toast.makeText(this, "El nombre de usuario ya existe", Toast.LENGTH_LONG).show();
+            else {
+                UsuarioController.insertUsuario(this, usuario, password);
+                //UsuarioController.displayUsuario(this, usuario);
+                Toast.makeText(this, "El usuario: " + usuario + " se insertó se registro con exito", Toast.LENGTH_LONG).show();
+            }
         }
         else {
             Toast.makeText(this, "Debe introducir un login y password", Toast.LENGTH_LONG).show();

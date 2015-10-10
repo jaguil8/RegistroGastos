@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,7 +55,17 @@ public class historial extends AppCompatActivity {
                     //Toast.makeText(this,gb.getItemAtPosition(index).toString(),Toast.LENGTH_LONG).show();
                     //Toast.makeText(this, "Seleccionado:" + parent.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
                     //Toast.makeText(this, "Seleccionado", Toast.LENGTH_LONG).show();
-                    boolean eliminado =GastosController.deleteGasto(view.getContext(),parent.getId());
+                    Object obj = gb.getAdapter().getItem(index);
+                    String value = obj.toString();
+                    Log.d("MyLog", "Value is: " + value);
+                    String [] split = value.split(" ");
+                    int id =GastosController.getGastoByDescripcion(view.getContext(),split[0]);
+                    boolean eliminado =GastosController.deleteGasto(view.getContext(),id);
+                    if(eliminado)
+                    {
+                        Toast.makeText(historial.this, "Registro eliminado", Toast.LENGTH_SHORT).show();
+                        llenarListView();
+                    }
                     return eliminado;
                 }
             });
@@ -65,10 +76,7 @@ public class historial extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
+    public void llenarListView(){
         gb =  (ListView)findViewById(R.id.gbhistorial);
         List<String> list = new ArrayList<String>();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
@@ -85,6 +93,13 @@ public class historial extends AppCompatActivity {
         {
             Toast.makeText(this, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        llenarListView();
     }
 
     @Override

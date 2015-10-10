@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Created by miguel on 04/10/2015.
@@ -69,7 +70,7 @@ public class UsuarioBD {
         return mCursor;
     }
 
-    public Cursor getUsuarioByLogin(String  login) throws SQLException {
+    public Cursor getUsuarioByLogin(String  login)  {
         /*String whereClause = KEY_LOGIN +" = ? ";
         String[] whereArgs = new String[] {
                login
@@ -82,18 +83,47 @@ public class UsuarioBD {
                 whereArgs,
                 null,null,null,null);*/
 
+        try {
+            Cursor mCursor = db.query(
+                    true,
+                    TABLENAME_USUARIOS,
+                    new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
+                    KEY_LOGIN + "='" + login + "'",
+                    null, null, null, null, null);
+
+
+            if (mCursor != null) {
+                mCursor.moveToFirst();
+            }
+
+            return mCursor;
+        }catch (SQLException ex)
+        {
+            Log.d("Error",ex.getMessage());
+            return null;
+        }
+
+    }
+
+    public Cursor getUsuarioByLogin2(String  login) throws SQLException {
+        /*String whereClause = KEY_LOGIN +" = ? ";
+        String[] whereArgs = new String[] {
+               login
+        };
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_USUARIOS,
                 new String[]{KEY_ID, KEY_LOGIN, KEY_PASSWORD},
-                KEY_LOGIN + "='" + login + "'",
-                null, null, null, null, null);
+                whereClause,
+                whereArgs,
+                null,null,null,null);*/
+
+        Cursor mCursor = db.rawQuery("select * from usuario where login=?" ,
+                new String[]{login});
 
 
         if (mCursor != null) {
             mCursor.moveToFirst();
-        }else{
-            return null;
         }
 
         return mCursor;

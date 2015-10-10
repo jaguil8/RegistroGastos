@@ -29,14 +29,14 @@ public class UsuarioController {
         return isDeleted;
     }
 
-    public static void displayUsuario(Context context, String login) {
+    /*public static void displayUsuario(Context context, String login) {
         DBAdapter db = new DBAdapter(context);
         db.open();
-        String nombre = db.getUsuarioByLogin(login).toString();
+        int nombre = db.getUsuarioByLogin(login);
         db.close();
         Log.d("NOMBRE_CONTACTO", nombre);
         Toast.makeText(context, "El nombre del usuario es: " + nombre, Toast.LENGTH_LONG).show();
-    }
+    }*/
 
     public static String getPassword(Context context, String login) {
         DBAdapter db = new DBAdapter(context);
@@ -55,10 +55,10 @@ public class UsuarioController {
         return existe;
     }
 
-    public static int obtenerUsuarioId(Context context,String login) {
+    public static int getUsuarioByLogin(Context context,String login) {
         DBAdapter db = new DBAdapter(context);
         db.open();
-        int id = db.obtenerUsuarioId(login);
+        int id = db.getUsuarioByLogin(login);
         db.close();
         return id;
     }

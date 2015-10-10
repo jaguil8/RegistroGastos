@@ -50,6 +50,8 @@ public class DBAdapter {
         return id > 0;
     }
 
+
+
     public boolean insertUsuario(String login,String password){
         UsuarioBD usuarioDB = new UsuarioBD(db);
         long id = usuarioDB.insertUsuario(login, password);
@@ -57,21 +59,34 @@ public class DBAdapter {
     }
 
     public Boolean existeUsuario(String login) throws SQLException{
-        UsuarioBD usuarioDB = new UsuarioBD(db);
-        Cursor usuario = usuarioDB.getUsuarioByLogin(login);
-        return usuario.getString(1).equals("0")?true:false ;
+        UsuarioBD usuarioBD = new UsuarioBD(db);
+        Cursor usuario = usuarioBD.getUsuarioByLogin(login);
+        if(usuario.getCount()> 0){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     public int obtenerUsuarioId(String login){
         UsuarioBD usuarioBD = new UsuarioBD(db);
         Cursor usuario = usuarioBD.getUsuarioByLogin(login);
-        if(usuario!= null){
-            return Integer.getInteger(usuario.getString(1));
+        if(usuario.getCount()> 0){
+            return Integer.parseInt(usuario.getString(1));
         }
         else
         {
             return 0;
         }
+    }
+
+    public Cursor getGastoByDescripcion(String descripcion) throws SQLException {
+        GastosDB gastosDB = new GastosDB(db);
+        Cursor cursor = gastosDB.getGastoByDescripcion(descripcion);
+        return cursor;
     }
 
     public boolean deleteGasto(int idGasto){
@@ -92,10 +107,16 @@ public class DBAdapter {
         return cursor;
     }
 
-    public String getUsuarioByLogin(String nombre){
+    public int getUsuarioByLogin(String nombre){
         UsuarioBD usuarioBD = new UsuarioBD(db);
-        Cursor cursor = usuarioBD.getUsuarioByLogin(nombre);
-        return cursor.getString(1);
+        Cursor usuario = usuarioBD.getUsuarioByLogin(nombre);
+        if(usuario.getCount()> 0){
+            return Integer.parseInt(usuario.getString(0));
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     public String getPasswordByLogin(String nombre){
