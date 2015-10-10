@@ -1,18 +1,74 @@
 package mx.lania.registrogastos;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import mx.lania.registrogastos.controller.GastosController;
 
 public class historial extends AppCompatActivity {
+
+    ListView gb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
+
+        gb =  (ListView)findViewById(R.id.gbhistorial);
+       List<String> list = new ArrayList<String>();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+        try{
+            List<String> c = GastosController.getAllGastos(this);
+            Iterator<String> it = c.iterator();
+            while (it.hasNext() ) {
+                list.add(it.next());
+
+            }
+
+            gb.setAdapter(dataAdapter);
+        }catch (Exception e)
+        {
+            Toast.makeText(this, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        gb =  (ListView)findViewById(R.id.gbhistorial);
+        List<String> list = new ArrayList<String>();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.activity_list_item,list);
+        try{
+            List<String> c = GastosController.getAllGastos(this);
+            Iterator<String> it = c.iterator();
+            while (it.hasNext() ) {
+                list.add(it.next());
+
+            }
+
+            gb.setAdapter(dataAdapter);
+        }catch (Exception e)
+        {
+            Toast.makeText(this, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

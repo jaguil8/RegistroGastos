@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,9 +22,11 @@ public class RegistrarGasto extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_gasto);
+
+        
     }
 
-    public void onGuardar(View view) throws ParseException {
+    public void onGuardar(View view) throws ParseException, InterruptedException {
         EditText txtCantidad = (EditText) findViewById(R.id.cantidadGasto);
         EditText txtDescripcion = (EditText) findViewById(R.id.descripcionGasto);
         EditText txtFecha = (EditText) findViewById(R.id.fechaGasto);
@@ -34,7 +37,10 @@ public class RegistrarGasto extends Activity {
         Date fecha = format.parse(txtFecha.getText().toString());
         String tipoGasto = txtTipoGasto.getText().toString();
 
-        GastosController.
+        GastosController.insertGasto(this,descripcion,cantidad,fecha.toString(),1,tipoGasto);
+        Toast.makeText(this, "Se ha guardado el gasto", Toast.LENGTH_LONG).show();
+        Thread.sleep(Long.parseLong("1000"));
+        finish();
 
     }
 

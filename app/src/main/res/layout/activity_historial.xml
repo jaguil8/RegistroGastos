@@ -20,12 +20,13 @@
     <ScrollView android:isScrollContainer="true"
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
 
-        <GridView
-            android:id="@+id/gbhistorial"
+        <ListView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp"
+            android:id="@+id/gbhistorial"
+            tools:listitem="@android:layout/list_content" />
     </ScrollView>
 
 

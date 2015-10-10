@@ -42,7 +42,7 @@ public class GastosDB {
                     + KEY_DESC + " TEXT NOT NULL, "
                     + KEY_CANTIDAD + " NUMERIC NOT NULL, "
                     + KEY_ID_USUARIO + " INTEGER NOT NULL, "
-                    + KEY_TIPO_GASTO + " INTEGER NOT NULL DEFAULT 0, "
+                    + KEY_TIPO_GASTO + " Text NOT NULL, "
                     + KEY_FECHA + " TEXT NOT NULL, "
                     + " FOREIGN KEY(`idusuario`) REFERENCES usuario "
                     +");";
@@ -58,7 +58,7 @@ public class GastosDB {
     }
 
     //---Inserta un gasto a la base de datos---
-    public long insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto) {
+    public long insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, String tipoGasto) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_DESC, descripcion);
         contentValues.put(KEY_CANTIDAD, gasto);

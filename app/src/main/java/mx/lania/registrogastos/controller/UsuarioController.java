@@ -1,6 +1,7 @@
 package mx.lania.registrogastos.controller;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class UsuarioController {
         return password;
     }
 
-    public static boolean existeUsuario(Context context,String login)
+    public static boolean existeUsuario(Context context,String login) throws SQLException
     {
         DBAdapter db = new DBAdapter(context);
         db.open();

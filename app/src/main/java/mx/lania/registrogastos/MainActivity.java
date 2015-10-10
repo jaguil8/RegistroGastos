@@ -2,6 +2,7 @@ package mx.lania.registrogastos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         String token = UsuarioController.getPassword(this, usuario);
 
         if(password.equals(token)){
-            Toast.makeText(this, "Bienvenido", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bienvenido " +usuario, Toast.LENGTH_LONG).show();
             startActivity(new Intent("mx.lania.registrogastos.historial"));
         }else{
             Toast.makeText(this, "Error de usuario y/o contraseña", Toast.LENGTH_LONG).show();
@@ -50,22 +51,32 @@ public class MainActivity extends AppCompatActivity {
         EditText txtPassword =  (EditText)findViewById(R.id.txtPassword);
         String usuario = txtUsuario.getText().toString();
         String password = txtPassword.getText().toString();
+        if (!usuario.equals("") || !password.equals("")) {
 
-        UsuarioController.displayUsuario(this, usuario);
-        UsuarioController.insertUsuario(this, usuario, password);
-
-        /*if(!txtUsuario.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
-            boolean existe = UsuarioController.existeUsuario(this, txtUsuario.getText().toString());
-            if(existe)
-                Toast.makeText(this, "El nombre de usuario ya existe", Toast.LENGTH_LONG).show();
-            else {
-                UsuarioController.insertUsuario(this,txtUsuario.getText().toString(),txtPassword.getText().toString());
-                Toast.makeText(this, "El usuario se insertó", Toast.LENGTH_LONG).show();
-            }
+            UsuarioController.insertUsuario(this, usuario, password);
+            //UsuarioController.displayUsuario(this, usuario);
+            Toast.makeText(this, "El usuario: " + usuario +" se insertó se registro con exito", Toast.LENGTH_LONG).show();
         }
-        else
-        {
+        else {
             Toast.makeText(this, "Debe introducir un login y password", Toast.LENGTH_LONG).show();
+        }
+
+        /*try {
+            if (!txtUsuario.getText().toString().equals("") || txtPassword.getText().toString().equals("")) {
+                boolean existe = UsuarioController.existeUsuario(this, txtUsuario.getText().toString());
+                if (existe)
+                    Toast.makeText(this, "El nombre de usuario ya existe", Toast.LENGTH_LONG).show();
+                else {
+                    UsuarioController.displayUsuario(this, usuario);
+                    UsuarioController.insertUsuario(this, usuario, password);
+                    Toast.makeText(this, "El usuario se insertó", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(this, "Debe introducir un login y password", Toast.LENGTH_LONG).show();
+            }
+        }catch (SQLException ex)
+        {
+            Toast.makeText(this,ex.getMessage().toString(),Toast.LENGTH_LONG).show();
         }*/
 
     }

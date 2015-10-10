@@ -44,7 +44,7 @@ public class DBAdapter {
     *  SE INICIA PROCEDIMIENTOS DE DTD
     *
     * */
-    public boolean insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto){
+    public boolean insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, String tipoGasto){
         GastosDB gastosDB = new GastosDB(db);
         long id = gastosDB.insertGasto(descripcion, gasto, fecha, idUsuario, tipoGasto);
         return id > 0;
@@ -56,7 +56,7 @@ public class DBAdapter {
         return id > 0;
     }
 
-    public Boolean existeUsuario(String login){
+    public Boolean existeUsuario(String login) throws SQLException{
         UsuarioBD usuarioDB = new UsuarioBD(db);
         Cursor usuario = usuarioDB.getUsuarioByLogin(login);
         return usuario.getString(1).equals("0")?true:false ;
@@ -72,6 +72,12 @@ public class DBAdapter {
         GastosDB gastosDB = new GastosDB(db);
         Cursor cursor = gastosDB.getGastoByID(id);
         return cursor.getString(1);
+    }
+
+    public Cursor getAllGastos() {
+        GastosDB gastosDB = new GastosDB(db);
+        Cursor cursor = gastosDB.getAllGastos();
+        return cursor;
     }
 
     public String getUsuarioByLogin(String nombre){
