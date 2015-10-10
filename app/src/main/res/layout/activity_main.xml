@@ -18,14 +18,6 @@
             android:id="@+id/txtPassword"
             android:password="true"/>
     </TableRow>
-    <TableRow>
-        <TextView/>
-        <CheckBox
-            android:id="@+id/chkRememberPassword"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Recordar Usuario"/>
-    </TableRow>
 
     <TableRow>
         <Button
