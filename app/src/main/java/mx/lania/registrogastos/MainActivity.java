@@ -39,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(password.equals(token)){
             Toast.makeText(this, "Bienvenido " +usuario, Toast.LENGTH_LONG).show();
-            startActivity(new Intent("mx.lania.registrogastos.historial"));
+            Intent intent = new Intent("mx.lania.registrogastos.historial");
+            int idUsuario = 1; //UsuarioController.obtenerUsuarioId(this,usuario);
+            intent.putExtra("ID_USUARIO", idUsuario);
+            startActivity(intent);
         }else{
             Toast.makeText(this, "Error de usuario y/o contraseña", Toast.LENGTH_LONG).show();
         }

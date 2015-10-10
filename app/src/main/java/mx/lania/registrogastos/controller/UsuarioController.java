@@ -54,4 +54,12 @@ public class UsuarioController {
         db.close();
         return existe;
     }
+
+    public static int obtenerUsuarioId(Context context,String login) {
+        DBAdapter db = new DBAdapter(context);
+        db.open();
+        int id = db.obtenerUsuarioId(login);
+        db.close();
+        return id;
+    }
 }

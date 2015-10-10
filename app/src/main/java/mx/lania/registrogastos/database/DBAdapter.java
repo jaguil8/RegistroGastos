@@ -62,6 +62,18 @@ public class DBAdapter {
         return usuario.getString(1).equals("0")?true:false ;
     }
 
+    public int obtenerUsuarioId(String login){
+        UsuarioBD usuarioBD = new UsuarioBD(db);
+        Cursor usuario = usuarioBD.getUsuarioByLogin(login);
+        if(usuario!= null){
+            return Integer.getInteger(usuario.getString(1));
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     public boolean deleteGasto(int idGasto){
         GastosDB gastosDB = new GastosDB(db);
         boolean isDeleted = gastosDB.deleteGasto(idGasto);

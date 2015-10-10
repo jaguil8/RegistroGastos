@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -32,7 +33,7 @@ public class historial extends AppCompatActivity {
         setContentView(R.layout.activity_historial);
 
         gb =  (ListView)findViewById(R.id.gbhistorial);
-       List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
         try{
             List<String> c = GastosController.getAllGastos(this);
@@ -42,6 +43,21 @@ public class historial extends AppCompatActivity {
 
             }
 
+            gb.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                               int index, long arg3) {
+
+                    // Can't manage to remove an item here
+
+                    //Toast.makeText(this,gb.getItemAtPosition(index).toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Seleccionado:" + parent.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Seleccionado", Toast.LENGTH_LONG).show();
+                    boolean eliminado =GastosController.deleteGasto(view.getContext(),parent.getId());
+                    return eliminado;
+                }
+            });
             gb.setAdapter(dataAdapter);
         }catch (Exception e)
         {
