@@ -5,6 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import mx.lania.registrogastos.controller.GastosController;
 
 public class RegistrarGasto extends Activity {
 
@@ -12,6 +21,21 @@ public class RegistrarGasto extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_gasto);
+    }
+
+    public void onGuardar(View view) throws ParseException {
+        EditText txtCantidad = (EditText) findViewById(R.id.cantidadGasto);
+        EditText txtDescripcion = (EditText) findViewById(R.id.descripcionGasto);
+        EditText txtFecha = (EditText) findViewById(R.id.fechaGasto);
+        EditText txtTipoGasto = (EditText) findViewById(R.id.tipoGasto);
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Double cantidad = Double.parseDouble(txtCantidad.getText().toString());
+        String descripcion = txtDescripcion.getText().toString();
+        Date fecha = format.parse(txtFecha.getText().toString());
+        String tipoGasto = txtTipoGasto.getText().toString();
+
+        GastosController.
+
     }
 
     @Override
