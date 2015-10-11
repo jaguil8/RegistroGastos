@@ -6,6 +6,13 @@
     tools:context="mx.lania.registrogastos.historial">
 
 
+    <DatePicker
+        android:id="@+id/fecha"  android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:calendarViewShown="false"
+
+        android:datePickerMode="spinner" />
     <Button
 
         android:id="@+id/bt_agregar"
@@ -22,7 +29,7 @@
         android:layout_height="300dp"
         android:id="@+id/gbhistorial"
         android:longClickable="true"
-        
+
 
         tools:listitem="@android:layout/list_content" />
 

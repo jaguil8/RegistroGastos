@@ -86,12 +86,27 @@ public class GastosDB {
     }
 
 
+    public Cursor getGastoByDescripcionFecha(String descripcion,String fecha) throws SQLException {
+        Cursor mCursor = db.query(
+                true,
+                TABLENAME_GASTOS,
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                KEY_DESC + "='" + descripcion + "'" + " and " + KEY_FECHA + " ='"+ fecha +"'",
+                null, null, null, null, null);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+
+        return mCursor;
+    }
+
     public Cursor getGastoByDescripcion(String descripcion) throws SQLException {
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_GASTOS,
                 new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
-                KEY_DESC + "='" + descripcion + "'",
+                KEY_DESC + "='" + descripcion + "'" ,
                 null, null, null, null, null);
 
         if (mCursor != null) {
@@ -111,6 +126,13 @@ public class GastosDB {
         return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
                 null, null, null, null, null);
     }
+
+    //---Regresa todos los gastos---
+    public Cursor getAllGastosByIdUsuario(int idUsuario) {
+        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                KEY_ID_USUARIO + "=" + idUsuario, null, null, null, null);
+    }
+
 
     //---Actualiza un gasto---
     public boolean updateGasto(long rowId, String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto) {

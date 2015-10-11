@@ -21,6 +21,8 @@ import mx.lania.registrogastos.controller.GastosController;
 
 public class RegistrarGasto extends Activity {
 
+
+    int idUsuario=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +34,12 @@ public class RegistrarGasto extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        idUsuario = getIntent().getExtras().getInt("ID_USUARIO");
 
+    }
+
+    public void onCancelar (View view){
+        finish();
     }
 
     public void onGuardar(View view) {
@@ -59,7 +66,7 @@ public class RegistrarGasto extends Activity {
             }
 
             String fechaString = dia + "/"+ mes + "/"+ anioS;
-            GastosController.insertGasto(this, descripcion, cantidad, fechaString, 1, tipoGasto);
+            GastosController.insertGasto(this, descripcion, cantidad, fechaString, idUsuario, tipoGasto);
             Toast.makeText(this, "Se ha guardado el gasto", Toast.LENGTH_LONG).show();
             //Thread.sleep(Long.parseLong("1000"));
             finish();

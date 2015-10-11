@@ -83,6 +83,12 @@ public class DBAdapter {
         }
     }
 
+    public Cursor getGastoByDescripcionFecha(String descripcion,String fecha) throws SQLException {
+        GastosDB gastosDB = new GastosDB(db);
+        Cursor cursor = gastosDB.getGastoByDescripcionFecha(descripcion, fecha);
+        return cursor;
+    }
+
     public Cursor getGastoByDescripcion(String descripcion) throws SQLException {
         GastosDB gastosDB = new GastosDB(db);
         Cursor cursor = gastosDB.getGastoByDescripcion(descripcion);
@@ -101,9 +107,21 @@ public class DBAdapter {
         return cursor.getString(1);
     }
 
+    public Cursor getGastoByIDCursor(long id) {
+        GastosDB gastosDB = new GastosDB(db);
+        Cursor cursor = gastosDB.getGastoByID(id);
+        return cursor;
+    }
+
     public Cursor getAllGastos() {
         GastosDB gastosDB = new GastosDB(db);
         Cursor cursor = gastosDB.getAllGastos();
+        return cursor;
+    }
+
+    public Cursor getAllGastosByIdUsuario(int idUsuario) {
+        GastosDB gastosDB = new GastosDB(db);
+        Cursor cursor = gastosDB.getAllGastosByIdUsuario(idUsuario);
         return cursor;
     }
 

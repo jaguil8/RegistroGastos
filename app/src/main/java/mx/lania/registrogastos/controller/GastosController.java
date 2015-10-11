@@ -44,6 +44,18 @@ public class GastosController {
         Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
     }
 
+    public static int getGastoByDescripcionFecha(Context context,String descripcion,String fecha) throws SQLException {
+        DBAdapter db = new DBAdapter(context);
+        int id=0;
+        db.open();
+        Cursor c = db.getGastoByDescripcionFecha(descripcion,fecha);
+        if(c.moveToFirst()){
+            id = Integer.parseInt(c.getString(0));
+        }
+        db.close();
+        return id;
+    }
+
     public static int getGastoByDescripcion(Context context,String descripcion) throws SQLException {
         DBAdapter db = new DBAdapter(context);
         int id=0;
@@ -54,6 +66,38 @@ public class GastosController {
         }
         db.close();
         return id;
+    }
+
+    public static String getGastoById(Context context, long id)
+    {
+        DBAdapter db = new DBAdapter(context);
+        String gastoString="";
+        db.open();
+        Cursor c = db.getGastoByIDCursor(id);
+        if(c.moveToFirst()){
+            gastoString +=c.getString(1)+ " " + c.getString(2) + " "+ c.getString(3)+ " " + c.getString(4) ;
+        }
+        db.close();
+        return gastoString;
+    }
+
+
+
+    public static List<String> getAllGastosByIdUsuario(Context context,int idUsuario) {
+        DBAdapter db = new DBAdapter(context);
+        List<String> list = new ArrayList<String>();
+        db.open();
+        Cursor c = db.getAllGastosByIdUsuario(idUsuario);
+        while(c.moveToNext()){
+            String descipcion = c.getString(1);
+            String gasto = c.getString(2);
+            //String fecha = c.getString(3).toString();
+            list.add(descipcion + " " + gasto );
+        }
+        db.close();
+        return list;
+        //Log.d("DESCRIPCION_GASTO", descripcion);
+        //Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
     }
 
     public static List<String> getAllGastos(Context context) {
