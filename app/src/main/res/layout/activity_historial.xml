@@ -29,7 +29,7 @@
         android:layout_height="300dp"
         android:id="@+id/gbhistorial"
         android:longClickable="true"
-
+        android:clickable="true"
 
         tools:listitem="@android:layout/list_content" />
 

@@ -35,7 +35,7 @@ public class GastosController {
         return isDeleted;
     }
 
-    public static void displayGasto(Context context, long id) {
+  /*  public static void displayGasto(Context context, long id) {
         DBAdapter db = new DBAdapter(context);
         db.open();
         String descripcion = db.getGastoByID(id);
@@ -43,7 +43,7 @@ public class GastosController {
         Log.d("DESCRIPCION_GASTO", descripcion);
         Toast.makeText(context, "La Descripción del gasto es: " + descripcion, Toast.LENGTH_LONG).show();
     }
-
+*/
     public static int getGastoByDescripcionFecha(Context context,String descripcion,String fecha) throws SQLException {
         DBAdapter db = new DBAdapter(context);
         int id=0;
@@ -68,14 +68,23 @@ public class GastosController {
         return id;
     }
 
-    public static String getGastoById(Context context, long id)
+    public static String getGastoById(Context context, int id)
     {
         DBAdapter db = new DBAdapter(context);
         String gastoString="";
         db.open();
         Cursor c = db.getGastoByIDCursor(id);
         if(c.moveToFirst()){
-            gastoString +=c.getString(1)+ " " + c.getString(2) + " "+ c.getString(3)+ " " + c.getString(4) ;
+            String tipo = c.getString(4);
+            if(tipo.equals("1"))
+            {
+                tipo="Primario";
+            }
+            else
+            {
+                tipo="Secundaria";
+            }
+            gastoString += "Descripcion: "+c.getString(1)+ " Costo: " + c.getString(2) + " Fecha: "+ c.getString(3)+ " " +  tipo;
         }
         db.close();
         return gastoString;

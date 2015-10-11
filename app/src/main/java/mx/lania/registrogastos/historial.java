@@ -37,6 +37,7 @@ public class historial extends AppCompatActivity {
     ListView gb;
     int idUsuario=0;
     DatePicker txt_fecha;
+    String descpcionDialog="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,23 @@ public class historial extends AppCompatActivity {
                 list.add(it.next());
 
             }
+
+            gb.setClickable(true);
+            gb.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int index, long arg3) {
+                    Object obj = gb.getAdapter().getItem(index);
+                    String value = obj.toString();
+                    Log.d("MyLog", "Value is: " + value);
+                    String [] split = value.split(" ");
+                    //String fecha = txt_fecha.getYear() + "/" + txt_fecha.getMonth() + "/" + txt_fecha.getDayOfMonth();
+                    int id =GastosController.getGastoByDescripcion(view.getContext(),split[0].toString());
+                    //onCreateDialog(id);
+                    descpcionDialog =GastosController.getGastoById(view.getContext(),id);
+                    Toast.makeText(getApplicationContext(),"Datos: "+ descpcionDialog,Toast.LENGTH_SHORT).show();
+                }
+            });
 
             gb.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
@@ -98,6 +116,7 @@ public class historial extends AppCompatActivity {
 
 
 
+
     public void llenarListView(){
         gb =  (ListView)findViewById(R.id.gbhistorial);
         List<String> list = new ArrayList<String>();
@@ -120,24 +139,24 @@ public class historial extends AppCompatActivity {
     @Override
     protected Dialog onCreateDialog(int id)
     {
-        switch(id){
-            case 0:
+        //long idGasto = (long)id;
+        descpcionDialog =GastosController.getGastoById(this,id);
+
                 return new AlertDialog.Builder(this)
                         .setIcon(R.mipmap.ic_launcher)
                         .setTitle("Dialog")
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int witchButton) {
-                                        //GastosController
+
                                         Toast.makeText(getBaseContext(),
-                                                "", Toast.LENGTH_SHORT).show();
+                                                "Datos: "+descpcionDialog, Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
                         ).create();
 
-        }
-        return null;
+
     }
 
 
