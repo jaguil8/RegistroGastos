@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import mx.lania.registrogastos.controller.GastosController;
 import mx.lania.registrogastos.database.GastosDB;
@@ -38,6 +40,9 @@ public class historial extends AppCompatActivity {
     int idUsuario=0;
     DatePicker txt_fecha;
     String descpcionDialog="";
+
+    private TextToSpeech ttsObject;
+    int result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +76,16 @@ public class historial extends AppCompatActivity {
                     Object obj = gb.getAdapter().getItem(index);
                     String value = obj.toString();
                     Log.d("MyLog", "Value is: " + value);
-                    String [] split = value.split(" ");
+                    String[] split = value.split(" ");
                     //String fecha = txt_fecha.getYear() + "/" + txt_fecha.getMonth() + "/" + txt_fecha.getDayOfMonth();
-                    int id =GastosController.getGastoByDescripcion(view.getContext(),split[0].toString());
+                    int id = GastosController.getGastoByDescripcion(view.getContext(), split[0].toString());
                     //onCreateDialog(id);
-                    descpcionDialog =GastosController.getGastoById(view.getContext(),id);
-                    Toast.makeText(getApplicationContext(),"Datos: "+ descpcionDialog,Toast.LENGTH_SHORT).show();
+                    descpcionDialog = GastosController.getGastoById(view.getContext(), id);
+                    Toast.makeText(getApplicationContext(), "Datos: " + descpcionDialog, Toast.LENGTH_SHORT).show();
+                    if(result != TextToSpeech.LANG_NOT_SUPPORTED && result != TextToSpeech.LANG_MISSING_DATA)
+                    {
+                        ttsObject.speak("Datos: " + descpcionDialog,TextToSpeech.QUEUE_FLUSH,null);
+                    }
                 }
             });
 
@@ -94,12 +103,11 @@ public class historial extends AppCompatActivity {
                     Object obj = gb.getAdapter().getItem(index);
                     String value = obj.toString();
                     Log.d("MyLog", "Value is: " + value);
-                    String [] split = value.split(" ");
+                    String[] split = value.split(" ");
                     //String fecha = txt_fecha.getYear() + "/" + txt_fecha.getMonth() + "/" + txt_fecha.getDayOfMonth();
-                    int id =GastosController.getGastoByDescripcion(view.getContext(),split[0].toString());
-                    boolean eliminado =GastosController.deleteGasto(view.getContext(),id);
-                    if(eliminado)
-                    {
+                    int id = GastosController.getGastoByDescripcion(view.getContext(), split[0].toString());
+                    boolean eliminado = GastosController.deleteGasto(view.getContext(), id);
+                    if (eliminado) {
                         Toast.makeText(historial.this, "Registro eliminado", Toast.LENGTH_SHORT).show();
                         llenarListView();
                     }
@@ -107,6 +115,19 @@ public class historial extends AppCompatActivity {
                 }
             });
             gb.setAdapter(dataAdapter);
+
+            //se define objeto text to speech y se carga listener
+            ttsObject = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if(status == TextToSpeech.SUCCESS){
+                        result = ttsObject.setLanguage(Locale.getDefault());
+                    }
+                    else{
+                        Toast.makeText(historial.this,"Error: Tu dispositivo no soporta conversion de texto a voz",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }catch (Exception e)
         {
             Toast.makeText(this, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -114,8 +135,14 @@ public class historial extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(ttsObject!= null){
+            ttsObject.stop();
+            ttsObject.shutdown();
+        }
+    }
 
     public void llenarListView(){
         gb =  (ListView)findViewById(R.id.gbhistorial);
@@ -151,6 +178,7 @@ public class historial extends AppCompatActivity {
 
                                         Toast.makeText(getBaseContext(),
                                                 "Datos: "+descpcionDialog, Toast.LENGTH_SHORT).show();
+
                                     }
                                 }
 
