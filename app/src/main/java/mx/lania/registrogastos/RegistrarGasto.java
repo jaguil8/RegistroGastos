@@ -2,6 +2,8 @@ package mx.lania.registrogastos;
 
 import android.app.Activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +38,13 @@ public class RegistrarGasto extends Activity {
         spinner.setAdapter(adapter);
         idUsuario = getIntent().getExtras().getInt("ID_USUARIO");
 
+    }
+
+    public void onUbicar (View view){
+        Uri uri = Uri.parse("geo:23.5541314,-102.6205");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setPackage("mx.lania.registrogastos.MapsActivity");
+        startActivity(intent);
     }
 
     public void onCancelar (View view){

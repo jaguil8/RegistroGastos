@@ -81,10 +81,10 @@ public class historial extends AppCompatActivity {
                     int id = GastosController.getGastoByDescripcion(view.getContext(), split[0].toString());
                     //onCreateDialog(id);
                     descpcionDialog = GastosController.getGastoById(view.getContext(), id);
-                    Toast.makeText(getApplicationContext(), "Datos: " + descpcionDialog, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), descpcionDialog, Toast.LENGTH_SHORT).show();
                     if(result != TextToSpeech.LANG_NOT_SUPPORTED && result != TextToSpeech.LANG_MISSING_DATA)
                     {
-                        ttsObject.speak("Datos: " + descpcionDialog,TextToSpeech.QUEUE_FLUSH,null);
+                        ttsObject.speak(descpcionDialog,TextToSpeech.QUEUE_FLUSH,null);
                     }
                 }
             });

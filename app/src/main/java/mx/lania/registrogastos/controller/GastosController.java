@@ -84,7 +84,7 @@ public class GastosController {
             {
                 tipo="Secundaria";
             }
-            gastoString += "Descripcion: "+c.getString(1)+ " Costo: " + c.getString(2) + " Fecha: "+ c.getString(3)+ " " +  tipo;
+            gastoString += "Gasto en: "+c.getString(1)+ ". Por: " + c.getString(2) + "Pesos." + " El día: "+ c.getString(3)+ " " +  tipo;
         }
         db.close();
         return gastoString;
