@@ -43,7 +43,7 @@ public class RegistrarGasto extends Activity {
     public void onUbicar (View view){
         Uri uri = Uri.parse("geo:23.5541314,-102.6205");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        intent.setPackage("mx.lania.registrogastos.MapsActivity");
+        intent.setPackage("com.google.android.apps.maps");
         startActivity(intent);
     }
 
