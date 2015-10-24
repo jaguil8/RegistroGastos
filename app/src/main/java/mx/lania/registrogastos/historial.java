@@ -218,6 +218,11 @@ public class historial extends AppCompatActivity {
     }
 
     public void agregar(View view){
+        if(result != TextToSpeech.LANG_NOT_SUPPORTED && result != TextToSpeech.LANG_MISSING_DATA)
+        {
+            ttsObject.speak("Agregar",TextToSpeech.QUEUE_FLUSH,null);
+        }
+
         Intent intent = new Intent("mx.lania.registrogastos.RegistrarGasto");
 
         intent.putExtra("ID_USUARIO", idUsuario);
