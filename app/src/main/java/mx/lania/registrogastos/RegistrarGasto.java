@@ -41,7 +41,7 @@ public class RegistrarGasto extends Activity {
     }
 
     public void onUbicar (View view){
-        Uri uri = Uri.parse("geo:23.5541314,-102.6205");
+        Uri uri = Uri.parse("geo:19.2017042,-96.1406114");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         intent.setPackage("com.google.android.apps.maps");
         startActivity(intent);
