@@ -3,6 +3,7 @@ package mx.lania.registrogastos;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -40,11 +41,19 @@ public class RegistrarGasto extends Activity {
 
     }
 
+
+
     public void onUbicar (View view){
-        Uri uri = Uri.parse("geo:19.2017042,-96.1406114");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        intent.setPackage("com.google.android.apps.maps");
+
+        //Uri uri = Uri.parse("geo:0,0");
+        Intent intent = new Intent("mx.lania.registrogastos.SelectMapa");
         startActivity(intent);
+        //intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity,mx.lania.registrogastos.MapsActivity");
+        //intent.setPackage("com.google.android.apps.maps");
+        //intent.setPackage(",mx.lania.registrogastos");
+        //if (intent.resolveActivity(getPackageManager()) != null) {
+
+        //}
     }
 
     public void onCancelar (View view){
