@@ -47,13 +47,29 @@ public class RegistrarGasto extends Activity {
 
         //Uri uri = Uri.parse("geo:0,0");
         Intent intent = new Intent("mx.lania.registrogastos.SelectMapa");
-        startActivity(intent);
+        startActivityForResult(intent, 1);
         //intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity,mx.lania.registrogastos.MapsActivity");
         //intent.setPackage("com.google.android.apps.maps");
         //intent.setPackage(",mx.lania.registrogastos");
         //if (intent.resolveActivity(getPackageManager()) != null) {
 
         //}
+    }
+
+    // Call Back method  to get the Message form other Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==1)
+        {
+           /* intent.putExtra("LATITUDE",loc.latitude);
+            intent.putExtra("LONGITUDE",loc.longitude);*/
+            String latitude=data.getStringExtra("LATITUDE");
+            String longitude=data.getStringExtra("LONGITUDE");
+            //textView1.setText(message);
+        }
     }
 
     public void onCancelar (View view){

@@ -84,16 +84,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         googleMap.setMyLocationEnabled(true);
 
-        double longitude = googleMap.getMyLocation().getLongitude();
-        double latitude = googleMap.getMyLocation().getLatitude();
+        //double longitude = googleMap.getMyLocation().getLongitude();
+        //double latitude = googleMap.getMyLocation().getLatitude();
 
         googleMap.setOnMyLocationChangeListener(myLocationChangeListener);
         googleMap.setOnMarkerClickListener(myMarkerChangeListener);
 
 
-        Log.d(TAG, "Coordenadas " + longitude + " , " + latitude);
+        /*Log.d(TAG, "Coordenadas " + longitude + " , " + latitude);
         Toast.makeText(this, "Coordenadas " + longitude + " , " + latitude, Toast.LENGTH_LONG).show();
-
+*/
         setContentView(R.layout.activity_maps);
         mapFragment.getMapAsync(this);
     }
