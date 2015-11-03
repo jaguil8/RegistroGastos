@@ -18,10 +18,10 @@ import mx.lania.registrogastos.database.DBAdapter;
 
 public class GastosController {
 
-    public static boolean insertGasto(Context context, String descripcion, Double gasto, String fecha,int idUsuario , String tipoGasto){
+    public static boolean insertGasto(Context context, String descripcion, Double gasto, String fecha,int idUsuario , String tipoGasto,String latitude,String longitude){
         DBAdapter db = new DBAdapter(context);
         db.open();
-        boolean isInserted = db.insertGasto(descripcion, gasto,fecha,idUsuario,tipoGasto);
+        boolean isInserted = db.insertGasto(descripcion, gasto,fecha,idUsuario,tipoGasto,latitude,longitude);
         db.close();
         return isInserted;
     }

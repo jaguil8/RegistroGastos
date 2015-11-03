@@ -34,6 +34,8 @@ public class GastosDB {
     public static final String KEY_ID_USUARIO = "idusuario";
     public static final String KEY_TIPO_GASTO = "tipogasto";
     public static final String KEY_FECHA = "fecha";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
 
     //---Scripting---
     static final String TABLE_CREATE =
@@ -44,6 +46,8 @@ public class GastosDB {
                     + KEY_ID_USUARIO + " INTEGER NOT NULL, "
                     + KEY_TIPO_GASTO + " Text NOT NULL, "
                     + KEY_FECHA + " TEXT NOT NULL, "
+                    + KEY_LATITUDE + " TEXT NOT NULL, "
+                    + KEY_LONGITUDE + " TEXT NOT NULL, "
                     + " FOREIGN KEY(`idusuario`) REFERENCES usuario "
                     +");";
 
@@ -58,13 +62,15 @@ public class GastosDB {
     }
 
     //---Inserta un gasto a la base de datos---
-    public long insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, String tipoGasto) {
+    public long insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, String tipoGasto,String latitude, String longitud) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_DESC, descripcion);
         contentValues.put(KEY_CANTIDAD, gasto);
         contentValues.put(KEY_FECHA, fecha);
         contentValues.put(KEY_ID_USUARIO, idUsuario);
         contentValues.put(KEY_TIPO_GASTO, tipoGasto);
+        contentValues.put(KEY_LATITUDE, latitude);
+        contentValues.put(KEY_LONGITUDE, longitud);
         long rowID = db.insert(TABLENAME_GASTOS, null, contentValues);
         return rowID;
     }
@@ -74,7 +80,7 @@ public class GastosDB {
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_GASTOS,
-                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD, KEY_FECHA, KEY_ID_USUARIO, KEY_TIPO_GASTO},
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD, KEY_FECHA, KEY_ID_USUARIO, KEY_TIPO_GASTO,KEY_LATITUDE,KEY_LONGITUDE},
                 KEY_ID + "=" + rowId,
                 null, null, null, null, null);
 
@@ -90,7 +96,7 @@ public class GastosDB {
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_GASTOS,
-                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO,KEY_LATITUDE,KEY_LONGITUDE},
                 KEY_DESC + "='" + descripcion + "'" + " and " + KEY_FECHA + " ='"+ fecha +"'",
                 null, null, null, null, null);
 
@@ -105,7 +111,7 @@ public class GastosDB {
         Cursor mCursor = db.query(
                 true,
                 TABLENAME_GASTOS,
-                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+                new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO,KEY_LATITUDE,KEY_LONGITUDE},
                 KEY_DESC + "='" + descripcion + "'" ,
                 null, null, null, null, null);
 
@@ -123,25 +129,27 @@ public class GastosDB {
 
     //---Regresa todos los gastos---
     public Cursor getAllGastos() {
-        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO,KEY_LATITUDE,KEY_LONGITUDE},
                 null, null, null, null, null);
     }
 
     //---Regresa todos los gastos---
     public Cursor getAllGastosByIdUsuario(int idUsuario) {
-        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO},
+        return db.query(TABLENAME_GASTOS, new String[]{KEY_ID, KEY_DESC, KEY_CANTIDAD,KEY_FECHA,KEY_ID_USUARIO,KEY_TIPO_GASTO,KEY_LATITUDE,KEY_LONGITUDE},
                 KEY_ID_USUARIO + "=" + idUsuario, null, null, null, null);
     }
 
 
     //---Actualiza un gasto---
-    public boolean updateGasto(long rowId, String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto) {
+    public boolean updateGasto(long rowId, String descripcion, Double gasto, String fecha, int idUsuario, int tipoGasto,String latitude,String longitude) {
         ContentValues args = new ContentValues();
         args.put(KEY_DESC, descripcion);
         args.put(KEY_CANTIDAD, gasto);
         args.put(KEY_FECHA, fecha);
         args.put(KEY_ID_USUARIO, idUsuario);
         args.put(KEY_TIPO_GASTO, tipoGasto);
+        args.put(KEY_LATITUDE, latitude);
+        args.put(KEY_LONGITUDE, longitude);
         return db.update(TABLENAME_GASTOS, args, KEY_ID + "=" + rowId, null) > 0;
     }
 }

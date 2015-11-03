@@ -15,7 +15,7 @@ public class DBAdapter {
 
     //---Variables de Base de Datos---
     private static final String DATABASE_NAME = "Gastos";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     final Context context;
 
     //static final String TAG = "DBAdapter";
@@ -44,9 +44,9 @@ public class DBAdapter {
     *  SE INICIA PROCEDIMIENTOS DE DTD
     *
     * */
-    public boolean insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, String tipoGasto){
+    public boolean insertGasto(String descripcion, Double gasto, String fecha, int idUsuario, String tipoGasto,String latitude, String longitude){
         GastosDB gastosDB = new GastosDB(db);
-        long id = gastosDB.insertGasto(descripcion, gasto, fecha, idUsuario, tipoGasto);
+        long id = gastosDB.insertGasto(descripcion, gasto, fecha, idUsuario, tipoGasto,latitude,longitude);
         return id > 0;
     }
 

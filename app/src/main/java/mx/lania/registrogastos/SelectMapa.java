@@ -25,6 +25,9 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
     GoogleMap googleMap ;
     Location locationG;
 
+    double longitude, latitude;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,7 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
                 arrayDouble[0]=loc.latitude;
                 arrayDouble[1]=loc.longitude;
                 intent.putExtra("COOR",arrayDouble);
+
                 intent.putExtra("LATITUDE", loc.latitude);
                 intent.putExtra("LONGITUDE",loc.longitude);
                 Toast.makeText(SelectMapa.this,"Ha seleccionado las coordenadas latitud:" + loc.latitude + " longitud:" + loc.longitude,Toast.LENGTH_LONG).show();

@@ -25,6 +25,8 @@ import mx.lania.registrogastos.controller.GastosController;
 public class RegistrarGasto extends Activity {
 
 
+    String latitudeLong="0";
+    String longitudeLong="0";
     int idUsuario=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +47,11 @@ public class RegistrarGasto extends Activity {
 
     public void onUbicar (View view){
 
-        //Uri uri = Uri.parse("geo:0,0");
+        latitudeLong="0";
+        longitudeLong="0";
         Intent intent = new Intent("mx.lania.registrogastos.SelectMapa");
         startActivityForResult(intent, 1);
-        //intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity,mx.lania.registrogastos.MapsActivity");
-        //intent.setPackage("com.google.android.apps.maps");
-        //intent.setPackage(",mx.lania.registrogastos");
-        //if (intent.resolveActivity(getPackageManager()) != null) {
 
-        //}
     }
 
     // Call Back method  to get the Message form other Activity
@@ -66,13 +64,19 @@ public class RegistrarGasto extends Activity {
         {
            /* intent.putExtra("LATITUDE",loc.latitude);
             intent.putExtra("LONGITUDE",loc.longitude);*/
-            String latitude=data.getStringExtra("LATITUDE");
-            String longitude=data.getStringExtra("LONGITUDE");
+            if(data.getExtras().getDouble("LATITUDE")!= 0) {
+                Double latitude = data.getExtras().getDouble("LATITUDE");
+                Double longitude = data.getExtras().getDouble("LONGITUDE");
+                latitudeLong = latitude.toString();
+                longitudeLong = longitude.toString();
+            }
             //textView1.setText(message);
         }
     }
 
     public void onCancelar (View view){
+        latitudeLong="0";
+        longitudeLong="0";
         finish();
     }
 
@@ -99,8 +103,12 @@ public class RegistrarGasto extends Activity {
                 mesS = "0" + String.valueOf((mes + 1));
             }
 
+
+
             String fechaString = dia + "/"+ mes + "/"+ anioS;
-            GastosController.insertGasto(this, descripcion, cantidad, fechaString, idUsuario, tipoGasto);
+            GastosController.insertGasto(this, descripcion, cantidad, fechaString, idUsuario, tipoGasto,latitudeLong,longitudeLong);
+            latitudeLong="0";
+            longitudeLong="0";
             Toast.makeText(this, "Se ha guardado el gasto", Toast.LENGTH_LONG).show();
             //Thread.sleep(Long.parseLong("1000"));
             finish();
