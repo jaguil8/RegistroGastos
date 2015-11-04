@@ -49,7 +49,9 @@ public class RegistrarGasto extends Activity {
 
         latitudeLong="0";
         longitudeLong="0";
+        //super.onBackPressed();
         Intent intent = new Intent("mx.lania.registrogastos.SelectMapa");
+        intent.putExtra("actividad", 1);
         startActivityForResult(intent, 1);
 
     }
@@ -111,7 +113,11 @@ public class RegistrarGasto extends Activity {
             longitudeLong="0";
             Toast.makeText(this, "Se ha guardado el gasto", Toast.LENGTH_LONG).show();
             //Thread.sleep(Long.parseLong("1000"));
-            finish();
+            Intent intent = new Intent("mx.lania.registrogastos.historial");
+
+            intent.putExtra("ID_USUARIO", idUsuario);
+            startActivity(intent);
+            //finish();
 
         }catch (Exception e)
         {

@@ -31,7 +31,10 @@
         android:longClickable="true"
         android:clickable="true"
 
-        tools:listitem="@android:layout/list_content" />
+        tools:listitem="@android:layout/list_content" >
+
+
+    </ListView>
 
     <ScrollView android:isScrollContainer="true"
         android:id="@+id/scrollView"

@@ -1,8 +1,13 @@
 package mx.lania.registrogastos;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,14 +23,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class SelectMapa  extends Activity implements OnMapReadyCallback {
+public class SelectMapa extends Activity implements OnMapReadyCallback, LocationListener {
 
     protected static final String TAG = "SelectMapa";
 
-    GoogleMap googleMap ;
+    GoogleMap googleMap;
+
+    boolean primerActivo = true;
     Location locationG;
 
-    double longitude, latitude;
+    double longitude=0, latitude=0, actividad = 0;
 
 
     @Override
@@ -33,6 +40,7 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_mapa);
 
+        //getActivity().onBackPressed();
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
 
         googleMap = mapFragment.getMap();
@@ -41,18 +49,44 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
 
         //locationG= googleMap.getMyLocation();
 
+        int actividad = getIntent().getExtras().getInt("actividad");
+        if (actividad == 2) {
+            latitude = (Double.parseDouble(getIntent().getExtras().getString("coordenadaLatitude")));
+            longitude = (Double.parseDouble(getIntent().getExtras().getString("coordenadaLongitude")));
+            //primerActivo=false;
+            LatLng loc = new LatLng(latitude, longitude);
+            googleMap.addMarker(new MarkerOptions().position(loc));
+
+        } else if (actividad == 1) {
+            primerActivo = true;
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            // Creating a criteria object to retrieve provider
+            Criteria criteria = new Criteria();
+
+            // Getting the name of the best provider
+            String provider = locationManager.getBestProvider(criteria, true);
 
 
-        /*googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(19.1998, -87.2272), 13
-        ));*/
 
-        //mapFragment.getContext(
+            Location location = locationManager.getLastKnownLocation(provider);
+
+            if (location != null) {
+                latitude=location.getLatitude();
+                longitude=location.getLongitude();
+                LatLng latLng = new LatLng(latitude, longitude);
+
+                // Showing the current location in Google Map
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                // Zoom in the Google Map
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            }
+
+            locationManager.requestLocationUpdates(provider, 20000, 0, (LocationListener) this);
+        }
 
 
-        /*double longitude = googleMap.getMyLocation().getLongitude();
-        double latitude = googleMap.getMyLocation().getLatitude();
-*/
         //googleMap.setOnMyLocationChangeListener(myLocationChangeListener);
         googleMap.setOnMarkerClickListener(myMarkerChangeListener);
         googleMap.setOnMapLongClickListener(myLongClickListener);
@@ -73,16 +107,19 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
             googleMap.addMarker(new MarkerOptions().position(loc));
             if(googleMap != null){
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 18.0f));
-                Intent intent=new Intent();
-                double[] arrayDouble = new double[2];
-                arrayDouble[0]=loc.latitude;
-                arrayDouble[1]=loc.longitude;
-                intent.putExtra("COOR",arrayDouble);
+                int actividad=getIntent().getExtras().getInt("actividad");
+                if(actividad==1) {
+                    Intent intent = new Intent();
+                    double[] arrayDouble = new double[2];
+                    arrayDouble[0] = loc.latitude;
+                    arrayDouble[1] = loc.longitude;
+                    intent.putExtra("COOR", arrayDouble);
 
-                intent.putExtra("LATITUDE", loc.latitude);
-                intent.putExtra("LONGITUDE",loc.longitude);
-                Toast.makeText(SelectMapa.this,"Ha seleccionado las coordenadas latitud:" + loc.latitude + " longitud:" + loc.longitude,Toast.LENGTH_LONG).show();
-                setResult(1,intent);
+                    intent.putExtra("LATITUDE", loc.latitude);
+                    intent.putExtra("LONGITUDE", loc.longitude);
+                    Toast.makeText(SelectMapa.this, "Ha seleccionado las coordenadas latitud:" + loc.latitude + " longitud:" + loc.longitude, Toast.LENGTH_LONG).show();
+                    setResult(1, intent);
+                }
                 finish();//finishing activity
             }
 
@@ -101,11 +138,16 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
         public void onMyLocationChange(Location location) {
-            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(loc));
-            if(googleMap != null){
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
-            }
+            /*if(primerActivo) {
+                LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+                googleMap.addMarker(new MarkerOptions().position(loc));
+                if (googleMap != null) {
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+                    primerActivo = false;
+                    latitude=loc.latitude;
+                    longitude=loc.longitude;
+                }
+            }*/
         }
     };
 
@@ -134,8 +176,43 @@ public class SelectMapa  extends Activity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(19.4555471, -96.959272), 13
+                new LatLng(latitude, longitude), 16
         ));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //super.onBackPressed();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //super.onBackPressed();
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
 
     }
 }

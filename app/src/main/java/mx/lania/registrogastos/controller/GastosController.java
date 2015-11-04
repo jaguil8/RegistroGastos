@@ -48,7 +48,7 @@ public class GastosController {
         DBAdapter db = new DBAdapter(context);
         int id=0;
         db.open();
-        Cursor c = db.getGastoByDescripcionFecha(descripcion,fecha);
+        Cursor c = db.getGastoByDescripcionFecha(descripcion, fecha);
         if(c.moveToFirst()){
             id = Integer.parseInt(c.getString(0));
         }
@@ -90,11 +90,26 @@ public class GastosController {
         return gastoString;
     }
 
-
-
-    public static List<String> getAllGastosByIdUsuario(Context context,int idUsuario) {
+    public static String getGastoCoorById(Context context, int id)
+    {
         DBAdapter db = new DBAdapter(context);
-        List<String> list = new ArrayList<String>();
+        String gastoString="";
+        db.open();
+        Cursor c = db.getGastoByIDCursor(id);
+        if(c.moveToFirst()){
+
+
+            gastoString += c.getString(6)+ ":" + c.getString(7);
+        }
+        db.close();
+        return gastoString;
+    }
+
+
+
+    public static ArrayList<String> getAllGastosByIdUsuario(Context context,int idUsuario) {
+        DBAdapter db = new DBAdapter(context);
+        ArrayList<String> list = new ArrayList<String>();
         db.open();
         Cursor c = db.getAllGastosByIdUsuario(idUsuario);
         while(c.moveToNext()){
