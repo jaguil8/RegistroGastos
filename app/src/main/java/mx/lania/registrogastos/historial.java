@@ -57,19 +57,19 @@ public class historial extends ListActivity implements
 
         idUsuario = getIntent().getExtras().getInt("ID_USUARIO");
 
-        List<String> list = new ArrayList<String>();
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+       // List<String> list = new ArrayList<String>();
+       // ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
 
 
 
         try{
             ArrayList<String> c = GastosController.getAllGastosByIdUsuario(this, idUsuario);
             dataItems =c;
-            Iterator<String> it = c.iterator();
+           /* Iterator<String> it = c.iterator();
             while (it.hasNext()) {
                 list.add(it.next());
 
-            }
+            }*/
 
             adapter = new ListAdapter(historial.this, c);
             adapter.setCustomButtonListner(historial.this);
@@ -77,7 +77,7 @@ public class historial extends ListActivity implements
 
 
 
-            ListView lv=  gb;
+           /* ListView lv=  gb;
 
 
             lv.setClickable(true);
@@ -131,11 +131,11 @@ public class historial extends ListActivity implements
                 }
             });
 
-            gb = lv;
+            gb = lv;*/
             //gb.setAdapter(dataAdapter);
 
 
-            //listView.setAdapter(adapter);
+            gb.setAdapter(adapter);
 
             //se define objeto text to speech y se carga listener
             ttsObject = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
