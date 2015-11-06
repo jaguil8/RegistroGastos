@@ -1,5 +1,6 @@
 package mx.lania.registrogastos;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -28,7 +29,7 @@ import java.util.Locale;
 
 import mx.lania.registrogastos.controller.GastosController;
 
-public class historial extends ListActivity implements
+public class historial extends Activity implements
         ListAdapter.customButtonListener {
 
     ListView gb;
@@ -48,7 +49,7 @@ public class historial extends ListActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historial);
 
-        gb =  (ListView)findViewById(R.id.gbhistorial);
+        gb =  (ListView)findViewById(R.id.list);
 
         txt_fecha =(DatePicker)this.findViewById(R.id.fecha);
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -166,7 +167,7 @@ public class historial extends ListActivity implements
     }
 
     public void llenarListView(){
-        gb =  (ListView)findViewById(R.id.gbhistorial);
+        gb =  (ListView)findViewById(R.id.list);
        // List<String> list = new ArrayList<String>();
         //ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
         try{
